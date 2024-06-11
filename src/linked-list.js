@@ -77,9 +77,47 @@ const linkedList = () => {
             return checkIfContains(this.root)
         },
     
-        find(value) {},
+        find(value) {
+            let index = 0
+            function findInNode(node) {
+                if (value === node.value) {
+                    return index
+                }
+                index++
+                if (node.nextNode === null) {return null}
+                return findInNode(node.nextNode)
+            }
+            return findInNode(this.root.nextNode)
+        },
     
-        toString() {}
+        toString() {
+            let string = ''
+            function nodeToString(node) {
+                string += `( ${node.value} )`
+                string += ' -> '
+                if (node.nextNode != null) {
+                    nodeToString(node.nextNode)
+                }
+                else string += '( null )'
+                return string
+            }
+            return nodeToString(this.root.nextNode)
+        },
+
+        insertAt(value, index) {
+            const newNode = node()
+            newNode.value = value
+            const followingNode = this.at(index)
+            const prevNode = index > 0 ? this.at(index - 1) : this.root;
+            prevNode.nextNode = newNode
+            newNode.nextNode = followingNode
+        },
+
+        removeAt(index) {
+            const prevNode = index > 0 ? this.at(index - 1) : this.root;
+            const followingNode = this.at(index+1)
+            prevNode.nextNode = followingNode
+        }
     }
 }
 
@@ -89,11 +127,3 @@ const node = () => {
         nextNode: null
     }
 }
-
-
-const testLinkedList = linkedList()
-testLinkedList.append('valor 4')
-testLinkedList.append('valor 2')
-testLinkedList.append('holis')
-testLinkedList.pop()
-console.log(testLinkedList.contains('holis'))
