@@ -127,3 +127,5 @@ const node = () => {
         nextNode: null
     }
 }
+
+export {linkedList}
