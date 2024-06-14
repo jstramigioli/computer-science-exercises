@@ -13,7 +13,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/src/hashmap.js"
+            "program": "${workspaceFolder}/src/binary-search-tree.js"
         }
     ]
 }
