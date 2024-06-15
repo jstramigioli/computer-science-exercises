@@ -195,6 +195,7 @@ const tree = (array) => {
     }
 
     function height(node) {
+            if (!node) return -1
             if (!node.left && !node.right) {
                 return 0
             }
@@ -214,7 +215,39 @@ const tree = (array) => {
     }
 
     function depth(node) {
+        let depth = 0
         
+        function recursiveDepth(currentNode) {
+            
+            if (node == currentNode) {
+                return
+            }
+            depth++
+            if (node.data < currentNode.data) {
+                recursiveDepth(currentNode.left)
+            }
+            else recursiveDepth(currentNode.right)
+        }
+        recursiveDepth(this.root)
+        return depth
+    }
+
+    function isBalanced() {
+        function checkIfBalanced(node) {
+            if (node === null) {
+                return true
+            }
+            if (Math.abs(height(node.right) - height(node.left)) <= 1) {
+                return (checkIfBalanced(node.right) && checkIfBalanced(node.left))
+            }
+            else return false
+        }
+        return checkIfBalanced(this.root)
+    }
+
+    function reBalance() {
+        const array = this.preOrder()
+        this.root = tree(array).root
     }
 
     return {
@@ -226,7 +259,10 @@ const tree = (array) => {
         inOrder,
         preOrder,
         postOrder,
-        height
+        height,
+        depth,
+        isBalanced,
+        reBalance
     }
 }
 
@@ -270,12 +306,4 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     }
   };
 
-  const bstTest = tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-  
-  bstTest.insert(322)
-  bstTest.insert(6)
-  prettyPrint(bstTest.root)
-  bstTest.deleteItem(67)
-  /* console.log(bstTest.root) */
-  prettyPrint(bstTest.root)
-  console.log(bstTest.height(bstTest.root))
+ 
